@@ -1,0 +1,107 @@
+<app-shell title="Settings" [deviceTimeLabel]="vm.deviceTimeLabel()">
+  <app-icon-button label="Back to main page" shell-actions (click)="backToRelay()">
+    <svg lucideArrowLeft size="20" aria-hidden="true"></svg>
+  </app-icon-button>
+
+  <section class="settings-section">
+    <header>
+      <span class="section-icon">
+        @if (vm.mode() === 'ap') {
+          <svg lucideRouter size="20" aria-hidden="true"></svg>
+        } @else {
+          <svg lucideWifi size="20" aria-hidden="true"></svg>
+        }
+      </span>
+      <div>
+        <h2>Network</h2>
+        <p>Choose how the relay should expose or join WiFi.</p>
+      </div>
+    </header>
+
+    <app-action-switch
+      label="WiFi mode"
+      trueLabel="AP mode"
+      falseLabel="Connect to WiFi"
+      [value]="vm.mode() === 'ap'"
+      (valueChange)="vm.mode.set($event ? 'ap' : 'station')"
+    />
+
+    @if (vm.mode() === 'station') {
+      <div class="settings-grid">
+        <app-field label="SSID">
+          <input
+            type="text"
+            autocomplete="wifi ssid"
+            [ngModel]="vm.ssid()"
+            (ngModelChange)="vm.ssid.set($event)"
+          />
+        </app-field>
+
+        <app-field label="Password" hint="Leave empty only for an open network.">
+          <input
+            type="password"
+            autocomplete="current-password"
+            [ngModel]="vm.password()"
+            (ngModelChange)="vm.password.set($event)"
+          />
+        </app-field>
+      </div>
+    }
+
+    <app-primary-button [loading]="vm.savingWifi()" (click)="vm.saveWifi()">
+      Save network
+    </app-primary-button>
+  </section>
+
+  <section class="settings-section">
+    <header>
+      <span class="section-icon is-time">
+        <svg lucideClock size="20" aria-hidden="true"></svg>
+      </span>
+      <div>
+        <h2>Device time</h2>
+        <p>DS3231 clock reported by the relay.</p>
+      </div>
+    </header>
+
+    <div class="time-sync">
+      <time>{{ vm.deviceTimeLabel() }}</time>
+      <app-primary-button [loading]="vm.syncingTime()" (click)="vm.syncTime()">
+        Sync
+      </app-primary-button>
+    </div>
+  </section>
+
+  <section class="settings-section">
+    <header>
+      <span class="section-icon is-token">
+        <svg lucideBot size="20" aria-hidden="true"></svg>
+      </span>
+      <div>
+        <h2>Telegram bot</h2>
+        <p>Store the bot token separately from WiFi settings.</p>
+      </div>
+    </header>
+
+    <app-field label="Telegram token">
+      <input
+        type="password"
+        autocomplete="off"
+        [ngModel]="vm.telegramToken()"
+        (ngModelChange)="vm.telegramToken.set($event)"
+      />
+    </app-field>
+
+    <app-primary-button [loading]="vm.savingToken()" (click)="vm.saveTelegramToken()">
+      Save token
+    </app-primary-button>
+  </section>
+
+  @if (vm.error()) {
+    <p class="feedback is-error">{{ vm.error() }}</p>
+  }
+
+  @if (vm.message()) {
+    <p class="feedback is-success">{{ vm.message() }}</p>
+  }
+</app-shell>

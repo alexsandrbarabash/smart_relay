@@ -1,0 +1,33 @@
+<div class="panel-grid">
+  <div>
+    <h2>Timer</h2>
+    <p>Run a one-shot action after the selected delay.</p>
+  </div>
+
+  <div class="timer-row">
+    <app-field label="Duration">
+      <input
+        type="number"
+        min="1"
+        inputmode="numeric"
+        [ngModel]="vm().timerAmount()"
+        (ngModelChange)="vm().timerAmount.set($event)"
+      />
+    </app-field>
+
+    <app-field label="Unit">
+      <select [ngModel]="vm().timerUnit()" (ngModelChange)="vm().timerUnit.set($event)">
+        <option value="minutes">Minutes</option>
+        <option value="hours">Hours</option>
+      </select>
+    </app-field>
+  </div>
+
+  <app-action-switch
+    label="Action at target time"
+    [value]="vm().timerActionOn()"
+    (valueChange)="vm().timerActionOn.set($event)"
+  />
+
+  <app-primary-button [loading]="vm().saving()" (click)="vm().saveTimer()">Save</app-primary-button>
+</div>

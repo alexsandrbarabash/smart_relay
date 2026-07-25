@@ -1,0 +1,32 @@
+<div class="panel-grid">
+  <div>
+    <h2>Schedule</h2>
+    <p>Choose a local date and time for a one-shot action.</p>
+  </div>
+
+  <div class="date-row">
+    <app-field label="Date">
+      <input
+        type="date"
+        [ngModel]="vm().scheduleDate()"
+        (ngModelChange)="vm().scheduleDate.set($event)"
+      />
+    </app-field>
+
+    <app-field label="Time">
+      <input
+        type="time"
+        [ngModel]="vm().scheduleTime()"
+        (ngModelChange)="vm().scheduleTime.set($event)"
+      />
+    </app-field>
+  </div>
+
+  <app-action-switch
+    label="Action at target time"
+    [value]="vm().scheduleActionOn()"
+    (valueChange)="vm().scheduleActionOn.set($event)"
+  />
+
+  <app-primary-button [loading]="vm().saving()" (click)="vm().saveSchedule()">Save</app-primary-button>
+</div>

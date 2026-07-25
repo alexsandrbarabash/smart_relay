@@ -1,0 +1,16 @@
+<main class="shell">
+  <section class="shell__header">
+    <div>
+      <p class="shell__eyebrow">
+        <span>{{ eyebrow() }}</span>
+        @if (deviceTimeLabel()) {
+          <time>{{ deviceTimeLabel() }}</time>
+        }
+      </p>
+      <h1>{{ title() }}</h1>
+    </div>
+    <ng-content select="[shell-actions]" />
+  </section>
+
+  <ng-content />
+</main>

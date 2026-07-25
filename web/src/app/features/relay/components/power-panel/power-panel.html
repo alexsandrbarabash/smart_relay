@@ -1,0 +1,13 @@
+<div class="panel-grid">
+  <div>
+    <h2>Manual control</h2>
+    <p>Choose the target relay state and save it.</p>
+  </div>
+
+  <app-action-switch
+    [value]="vm().powerActionOn()"
+    (valueChange)="vm().powerActionOn.set($event)"
+  />
+
+  <app-primary-button [loading]="vm().saving()" (click)="vm().savePower()">Save</app-primary-button>
+</div>

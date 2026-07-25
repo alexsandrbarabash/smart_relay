@@ -1,0 +1,23 @@
+<fieldset class="switch">
+  <legend>{{ label() }}</legend>
+  <div class="switch__track">
+    <button
+      type="button"
+      class="switch__option"
+      [class.is-selected]="value()"
+      [attr.aria-pressed]="value()"
+      (click)="select(true)"
+    >
+      {{ trueLabel() }}
+    </button>
+    <button
+      type="button"
+      class="switch__option"
+      [class.is-selected]="!value()"
+      [attr.aria-pressed]="!value()"
+      (click)="select(false)"
+    >
+      {{ falseLabel() }}
+    </button>
+  </div>
+</fieldset>

@@ -1,0 +1,53 @@
+<app-shell title="Smart Relay" [deviceTimeLabel]="vm.deviceTimeLabel()">
+  <app-icon-button label="Open settings" shell-actions (click)="openSettings()">
+    <svg lucideSettings size="20" aria-hidden="true"></svg>
+  </app-icon-button>
+
+  <section class="status-panel" aria-label="Relay status">
+    <div class="status-panel__identity">
+      <span class="status-panel__icon">
+        <svg lucidePlug size="20" aria-hidden="true"></svg>
+      </span>
+      <div>
+        <p>Device name</p>
+        <h3>{{ vm.status().deviceName }}</h3>
+      </div>
+    </div>
+
+    <div class="status-panel__pills">
+      <app-status-pill
+        [label]="vm.physicalStatusLabel()"
+        [state]="vm.status().physicalState ? 'on' : 'off'"
+      />
+      <app-status-pill [label]="vm.controllerStatusLabel()" [state]="vm.status().relayState" />
+      <app-status-pill
+        [label]="vm.telegramStatusLabel()"
+        [state]="vm.status().telegramActive ? 'on' : 'off'"
+      />
+    </div>
+  </section>
+
+  <app-tabs
+    [tabs]="vm.tabs"
+    [activeTab]="vm.activeTab()"
+    (activeTabChange)="vm.selectTab($event)"
+  />
+
+  <section class="panel">
+    @if (vm.activeTab() === 'power') {
+      <app-power-panel [vm]="vm" />
+    } @else if (vm.activeTab() === 'timer') {
+      <app-timer-panel [vm]="vm" />
+    } @else {
+      <app-schedule-panel [vm]="vm" />
+    }
+  </section>
+
+  @if (vm.error()) {
+    <p class="feedback is-error">{{ vm.error() }}</p>
+  }
+
+  @if (vm.message()) {
+    <p class="feedback is-success">{{ vm.message() }}</p>
+  }
+</app-shell>

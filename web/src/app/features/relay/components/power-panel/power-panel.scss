@@ -1,0 +1,16 @@
+.panel-grid {
+  display: grid;
+  gap: 18px;
+}
+
+h2 {
+  margin: 0 0 6px;
+  color: var(--color-ink);
+  font-size: 1.1rem;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0;
+  color: var(--color-muted);
+}

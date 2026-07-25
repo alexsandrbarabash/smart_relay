@@ -1,0 +1,7 @@
+<label class="field">
+  <span class="field__label">{{ label() }}</span>
+  <ng-content />
+  @if (hint()) {
+    <span class="field__hint">{{ hint() }}</span>
+  }
+</label>
